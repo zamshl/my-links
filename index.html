@@ -63,6 +63,14 @@
             bottom: 0;
             width: 100%;
         }
+        .icon-list {
+            list-style: none;
+            padding: 0;
+        }
+        .icon-list li {
+            margin: 10px 0;
+            font-size: 1.5em;
+        }
     </style>
 </head>
 <body>
@@ -78,7 +86,17 @@
         <li><a href="https://zamshl.github.io/my-links/" target="_blank">روابط GitHub Pages</a></li>
         <li><a href="https://example.com/profile?user=عزام" target="_blank">صفحتي الشخصية</a></li>
     </ul>
-    <button class="button" onclick="welcomeUser()">اضغط هنا للترحيب</button>
+    <button class="button" onclick="showLibraries()">اضغط هنا للترحيب</button>
+
+    <div id="libraries" style="display: none;">
+        <h2>مكتبات وأيقونات</h2>
+        <ul class="icon-list">
+            <li><i class="fab fa-github"></i> <a href="https://github.com/" target="_blank">GitHub</a></li>
+            <li><i class="fab fa-css3-alt"></i> <a href="https://www.w3.org/Style/CSS/" target="_blank">CSS</a></li>
+            <li><i class="fab fa-html5"></i> <a href="https://www.w3.org/TR/html5/" target="_blank">HTML5</a></li>
+            <li><i class="fab fa-js"></i> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">JavaScript</a></li>
+        </ul>
+    </div>
 </div>
 
 <footer>
@@ -86,7 +104,8 @@
 </footer>
 
 <script>
-    function welcomeUser() {
+    function showLibraries() {
+        document.getElementById('libraries').style.display = 'block';
         alert("مرحباً بك في موقعي! أتمنى لك تجربة ممتعة 😊");
     }
 </script>
