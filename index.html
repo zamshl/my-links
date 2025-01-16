@@ -3,22 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>روابطي الشخصية</title>
-
-    <!-- إضافة كود Google Analytics هنا -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XH0FY1FNXR"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-XH0FY1FNXR');
-    </script>
+    <title>موقعي الشخصي</title>
+    <!-- الروابط والمكتبات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        a {
+            color: #4caf50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            color: #45a049;
+        }
+        .content {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>مرحباً بك!</h1>
-    <p>هذا هو الرابط الخاص بك:</p>
-    <p><a href="https://example.com/profile?user=عزام" target="_blank">اضغط هنا</a></p>
+<header>
+    <h1 class="animate__animated animate__fadeInDown">مرحباً بك في موقعي الشخصي!</h1>
+</header>
+
+<div class="content">
+    <p class="animate__animated animate__fadeInUp">أنا عزام، وهذه صفحتي الشخصية الممتعة!</p>
+    <p>تصفح الروابط المميزة:</p>
+    <ul style="list-style: none; padding: 0;">
+        <li><a href="https://zamshl.github.io/my-links/" target="_blank">روابط GitHub Pages</a></li>
+        <li><a href="https://example.com/profile?user=عزام" target="_blank">صفحتي الشخصية</a></li>
+    </ul>
+    <button class="button" onclick="welcomeUser()">اضغط هنا للترحيب</button>
+</div>
+
+<footer>
+    <p>© 2025 موقعي الشخصي | تصميم عزام</p>
+</footer>
+
+<script>
+    function welcomeUser() {
+        alert("مرحباً بك في موقعي! أتمنى لك تجربة ممتعة 😊");
+    }
+</script>
 
 </body>
 </html>
