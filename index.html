@@ -1,4 +1,33 @@
-<!DOCTYPE html>
+<script>
+    function getDeviceInfo() {
+        const userAgent = navigator.userAgent;
+        const browserName = navigator.appName;
+        const browserVersion = navigator.appVersion;
+
+        let os = "غير معروف";
+        if (userAgent.indexOf("Windows") !== -1) os = "Windows";
+        else if (userAgent.indexOf("Mac") !== -1) os = "MacOS";
+        else if (userAgent.indexOf("Linux") !== -1) os = "Linux";
+        else if (userAgent.indexOf("Android") !== -1) os = "Android";
+        else if (userAgent.indexOf("iPhone") !== -1 || userAgent.indexOf("iPad") !== -1) os = "iOS";
+
+        const screenResolution = `${screen.width}x${screen.height}`;
+        const language = navigator.language || "غير معروف";
+
+        let deviceType = "جهاز مكتبي";
+        if (/Mobi|Android|iPhone/i.test(userAgent)) deviceType = "جهاز محمول";
+
+        // تخزين البيانات في localStorage
+        localStorage.setItem("browserName", browserName);
+        localStorage.setItem("browserVersion", browserVersion);
+        localStorage.setItem("os", os);
+        localStorage.setItem("screenResolution", screenResolution);
+        localStorage.setItem("language", language);
+        localStorage.setItem("deviceType", deviceType);
+    }
+
+    window.onload = getDeviceInfo;
+</script><!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
