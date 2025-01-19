@@ -2,6 +2,22 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
+    <title>البيانات المستلمة</title>
+</head>
+<body>
+    <h1>البيانات المستلمة:</h1>
+    <pre id="data"></pre>
+    <script>
+        // عرض البيانات المستلمة
+        const params = new URLSearchParams(window.location.search);
+        const data = params.toString();
+        document.getElementById('data').innerText = data || 'لم يتم استلام بيانات.';
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الصفحة الجديدة</title>
 </head>
