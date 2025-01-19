@@ -1,4 +1,22 @@
-<!DOCTYPE html>
+<script>
+    window.onload = function() {
+        // قراءة البيانات من localStorage
+        const browserName = localStorage.getItem("browserName");
+        const browserVersion = localStorage.getItem("browserVersion");
+        const os = localStorage.getItem("os");
+        const screenResolution = localStorage.getItem("screenResolution");
+        const language = localStorage.getItem("language");
+        const deviceType = localStorage.getItem("deviceType");
+
+        // عرض البيانات في الصفحة
+        document.getElementById("browserName").innerText = browserName || "--";
+        document.getElementById("browserVersion").innerText = browserVersion || "--";
+        document.getElementById("os").innerText = os || "--";
+        document.getElementById("screenResolution").innerText = screenResolution || "--";
+        document.getElementById("language").innerText = language || "--";
+        document.getElementById("deviceType").innerText = deviceType || "--";
+    };
+</script><!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
