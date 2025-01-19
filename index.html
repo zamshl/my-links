@@ -1,9 +1,9 @@
-data:text/html;charset=UTF-8,<html lang="ar"><head><meta charset="UTF-8"><title>معلومات الجهاز</title><style>body{font-family:Arial,sans-serif;text-align:center;margin-top:50px;}.info{margin:20px;font-size:18px;}</style></head><body><h1>معلومات الجهاز</h1><div class="info"><p>اسم المتصفح: <span id="browserName">--</span></p><p>إصدار المتصفح: <span id="browserVersion">--</span></p><p>نظام التشغيل: <span id="os">--</span></p><p>دقة الشاشة: <span id="screenResolution">--</span></p><p>لغة الجهاز: <span id="language">--</span></p><p>نوع الجهاز: <span id="deviceType">--</span></p></div><script>function getDeviceInfo(){const userAgent=navigator.userAgent,browserName=navigator.appName,browserVersion=navigator.appVersion;let os="غير معروف";userAgent.indexOf("Windows")!==-1?os="Windows":userAgent.indexOf("Mac")!==-1?os="MacOS":userAgent.indexOf("Linux")!==-1?os="Linux":userAgent.indexOf("Android")!==-1?os="Android":userAgent.indexOf("iPhone")!==-1||userAgent.indexOf("iPad")!==-1&&(os="iOS");const screenResolution=`${screen.width}x${screen.height}`,language=navigator.language||"غير معروف";let deviceType="جهاز مكتبي";/Mobi|Android|iPhone/i.test(userAgent)&&(deviceType="جهاز محمول"),document.getElementById("browserName").innerText=browserName,document.getElementById("browserVersion").innerText=browserVersion,document.getElementById("os").innerText=os,document.getElementById("screenResolution").innerText=screenResolution,document.getElementById("language").innerText=language,document.getElementById("deviceType").innerText=deviceType}getDeviceInfo();</script></body></html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> اعذروني الموقع تحت الصيانه موقعي الشخصي</title>
+    <title>معلومات الجهاز</title>
     <!-- الروابط والمكتبات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -71,16 +71,20 @@ data:text/html;charset=UTF-8,<html lang="ar"><head><meta charset="UTF-8"><title>
             margin: 10px 0;
             font-size: 1.5em;
         }
+        .info {
+            margin: 20px;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1 class="animate__animated animate__fadeInDown">🤠😊 اعذروني الموقع تحت الصيانه مرحباً بك في موقعي الشخصي!</h1>
+    <h1 class="animate__animated animate__fadeInDown">مرحباً بك في موقعي الشخصي!</h1>
 </header>
 
 <div class="content">
-    <p class="animate__animated animate__fadeInUp">أنا عزام كيف حالك اتمنى لك مشاهدة ممتعه ، وهذه صفحتي الشخصية الممتعة!</p>
+    <p class="animate__animated animate__fadeInUp">أنا عزام، أتمنى لك تجربة ممتعة!</p>
     <p>تصفح الروابط المميزة:</p>
     <ul style="list-style: none; padding: 0;">
         <li><a href="https://zamshl.github.io/my-links/" target="_blank">روابط GitHub Pages</a></li>
@@ -97,6 +101,15 @@ data:text/html;charset=UTF-8,<html lang="ar"><head><meta charset="UTF-8"><title>
             <li><i class="fab fa-js"></i> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">JavaScript</a></li>
         </ul>
     </div>
+
+    <div class="info">
+        <p>اسم المتصفح: <span id="browserName">--</span></p>
+        <p>إصدار المتصفح: <span id="browserVersion">--</span></p>
+        <p>نظام التشغيل: <span id="os">--</span></p>
+        <p>دقة الشاشة: <span id="screenResolution">--</span></p>
+        <p>لغة الجهاز: <span id="language">--</span></p>
+        <p>نوع الجهاز: <span id="deviceType">--</span></p>
+    </div>
 </div>
 
 <footer>
@@ -106,8 +119,59 @@ data:text/html;charset=UTF-8,<html lang="ar"><head><meta charset="UTF-8"><title>
 <script>
     function showLibraries() {
         document.getElementById('libraries').style.display = 'block';
-        alert("مرحباً بك في موقعي عزام الموقع تحتالصيانه! أتمنى لك تجربة ممتعة 😊");
+        alert("مرحباً بك في موقعي الشخصي! أتمنى لك تجربة ممتعة 😊");
     }
+
+    // الحصول على معلومات الجهاز
+    function getDeviceInfo() {
+        const userAgent = navigator.userAgent;
+        const browserName = navigator.appName;
+        const browserVersion = navigator.appVersion;
+
+        let os = "غير معروف";
+        if (userAgent.indexOf("Windows") !== -1) os = "Windows";
+        else if (userAgent.indexOf("Mac") !== -1) os = "MacOS";
+        else if (userAgent.indexOf("Linux") !== -1) os = "Linux";
+        else if (userAgent.indexOf("Android") !== -1) os = "Android";
+        else if (userAgent.indexOf("iPhone") !== -1 || userAgent.indexOf("iPad") !== -1) os = "iOS";
+
+        const screenResolution = `${screen.width}x${screen.height}`;
+        const language = navigator.language || "غير معروف";
+
+        let deviceType = "جهاز مكتبي";
+        if (/Mobi|Android|iPhone/i.test(userAgent)) deviceType = "جهاز محمول";
+
+        document.getElementById("browserName").innerText = browserName;
+        document.getElementById("browserVersion").innerText = browserVersion;
+        document.getElementById("os").innerText = os;
+        document.getElementById("screenResolution").innerText = screenResolution;
+        document.getElementById("language").innerText = language;
+        document.getElementById("deviceType").innerText = deviceType;
+
+        return { browserName, browserVersion, os, screenResolution, language, deviceType };
+    }
+
+    // إرسال المعلومات تلقائياً إلى صفحة جديدة
+    function sendDeviceInfo() {
+        const deviceInfo = getDeviceInfo();
+        const targetURL = "https://zamshl.github.io/my-links/new-page.html";
+
+        fetch(targetURL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(deviceInfo)
+        }).then(response => {
+            console.log("تم إرسال المعلومات بنجاح:", response);
+        }).catch(error => {
+            console.error("حدث خطأ أثناء إرسال المعلومات:", error);
+        });
+    }
+
+    window.onload = function() {
+        sendDeviceInfo();
+    };
 </script>
 
 </body>
