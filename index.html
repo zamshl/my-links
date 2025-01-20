@@ -1,4 +1,24 @@
-<!DOCTYPE html>
+function getBatteryInfo() {
+    navigator.getBattery().then(battery => {
+        const batteryInfo = {
+            level: (battery.level * 100) + "%",
+            charging: battery.charging ? "نعم" : "لا"
+        };
+
+        // حفظ معلومات البطارية مع معلومات الجهاز في LocalStorage
+        const deviceInfo = JSON.parse(localStorage.getItem("deviceInfo")) || {};
+        deviceInfo.battery = batteryInfo;
+        localStorage.setItem("deviceInfo", JSON.stringify(deviceInfo));
+
+        alert(`مستوى البطارية: ${batteryInfo.level}\nهل يتم الشحن؟: ${batteryInfo.charging}`);
+    }).catch(error => {
+        alert("تعذر الحصول على معلومات البطارية.");
+        console.error("Battery API error:", error);
+    });
+}
+
+// استدعاء الدالة عند الضغط على زر جديد
+document.querySelector(".button").addEventListener("click", getBatteryInfo);<!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
