@@ -3,135 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الصفحة الجديدة</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 20px;
-        }
-        footer {
-            margin-top: 30px;
-            color: gray;
-        }
-    </style>
+    <title>معلومات الجهاز</title>
 </head>
 <body>
-    <h1>مرحبًا بك في الصفحة الجديدة!</h1>
-    <p id="batteryInfo">لم يتم استلام بيانات البطارية بعد.</p>
-    <footer>© 2025 الصفحة الجديدة | تصميم عزام</footer>
+    <h1>معلومات الجهاز</h1>
+    <div id="deviceInfo"></div>
 
     <script>
-        // استقبال بيانات POST
-        document.addEventListener("DOMContentLoaded", () => {
-            if (window.location.search) {
-                const params = new URLSearchParams(window.location.search);
-                const batteryLevel = params.get("level");
-                const isCharging = params.get("charging");
-                if (batteryLevel && isCharging) {
-                    document.getElementById("batteryInfo").innerText =
-                        `مستوى البطارية: ${batteryLevel}\nهل يتم الشحن؟: ${isCharging}`;
-                }
-            }
-        });
-    </script>
-</body>
-</html>window.onload = function() {
-    const deviceInfo = JSON.parse(localStorage.getItem("deviceInfo"));
-
-    if (deviceInfo) {
-        const batteryInfo = deviceInfo.battery
-            ? `<p><strong>مستوى البطارية:</strong> ${deviceInfo.battery.level}</p>
-               <p><strong>هل يتم الشحن؟:</strong> ${deviceInfo.battery.charging}</p>`
-            : "<p>لم يتم تسجيل معلومات البطارية.</p>";
-
-        document.getElementById("deviceInfo").innerHTML = `
-            <p><strong>اسم المتصفح:</strong> ${deviceInfo.browserName}</p>
-            <p><strong>إصدار المتصفح:</strong> ${deviceInfo.browserVersion}</p>
-            <p><strong>نظام التشغيل:</strong> ${deviceInfo.os}</p>
-            <p><strong>دقة الشاشة:</strong> ${deviceInfo.screenResolution}</p>
-            <p><strong>لغة الجهاز:</strong> ${deviceInfo.language}</p>
-            <p><strong>نوع الجهاز:</strong> ${deviceInfo.deviceType}</p>
-            ${batteryInfo}
-        `;
-    } else {
-        document.getElementById("deviceInfo").innerHTML = "<p>لم يتم استلام بيانات.</p>";
-    }
-};<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحة جديدة</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-            text-align: center;
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-        }
-        h1 {
-            margin: 0;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        .info {
-            margin: 20px auto;
-            padding: 20px;
-            max-width: 600px;
-            background-color: #ffffff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            text-align: left;
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>مرحبًا بك في الصفحة الجديدة!</h1>
-</header>
-
-<div class="content">
-    <p>هذه صفحة جديدة تم إنشاؤها وربطها مع الصفحة السابقة.</p>
-    <div id="deviceInfo" class="info">تحميل البيانات...</div>
-</div>
-
-<footer>
-    <p>© 2025 موقعي الشخصي | تصميم عزام</p>
-</footer>
-
-<script>
-    window.onload = function() {
+        // عرض البيانات المحفوظة
         const deviceInfo = JSON.parse(localStorage.getItem("deviceInfo"));
-
         if (deviceInfo) {
             document.getElementById("deviceInfo").innerHTML = `
-                <p><strong>اسم المتصفح:</strong> ${deviceInfo.browserName}</p>
-                <p><strong>إصدار المتصفح:</strong> ${deviceInfo.browserVersion}</p>
-                <p><strong>نظام التشغيل:</strong> ${deviceInfo.os}</p>
-                <p><strong>دقة الشاشة:</strong> ${deviceInfo.screenResolution}</p>
-                <p><strong>لغة الجهاز:</strong> ${deviceInfo.language}</p>
-                <p><strong>نوع الجهاز:</strong> ${deviceInfo.deviceType}</p>
+                <p>نظام التشغيل: ${deviceInfo.os}</p>
+                <p>دقة الشاشة: ${deviceInfo.screenResolution}</p>
+                <p>اللغة: ${deviceInfo.language}</p>
+                <p>مستوى البطارية: ${deviceInfo.battery.level}</p>
+                <p>هل يتم الشحن؟: ${deviceInfo.battery.charging}</p>
             `;
         } else {
-            document.getElementById("deviceInfo").innerHTML = "<p>لم يتم استلام بيانات.</p>";
+            document.getElementById("deviceInfo").innerText = "لا توجد بيانات متاحة.";
         }
-    };
-</script>
-
+    </script>
 </body>
 </html>
