@@ -1,46 +1,20 @@
 <script>
     window.onload = function() {
-        // قراءة البيانات من localStorage
-        const browserName = localStorage.getItem("browserName");
-        const browserVersion = localStorage.getItem("browserVersion");
-        const os = localStorage.getItem("os");
-        const screenResolution = localStorage.getItem("screenResolution");
-        const language = localStorage.getItem("language");
-        const deviceType = localStorage.getItem("deviceType");
-
-        // عرض البيانات في الصفحة
-        document.getElementById("browserName").innerText = browserName || "--";
-        document.getElementById("browserVersion").innerText = browserVersion || "--";
-        document.getElementById("os").innerText = os || "--";
-        document.getElementById("screenResolution").innerText = screenResolution || "--";
-        document.getElementById("language").innerText = language || "--";
-        document.getElementById("deviceType").innerText = deviceType || "--";
+        // استرجاع البيانات من LocalStorage
+        const deviceInfo = JSON.parse(localStorage.getItem("deviceInfo"));
+        
+        if (deviceInfo) {
+            // عرض البيانات في الصفحة الجديدة
+            document.getElementById("deviceInfo").innerHTML = `
+                <p>اسم المتصفح: ${deviceInfo.browserName}</p>
+                <p>إصدار المتصفح: ${deviceInfo.browserVersion}</p>
+                <p>نظام التشغيل: ${deviceInfo.os}</p>
+                <p>دقة الشاشة: ${deviceInfo.screenResolution}</p>
+                <p>لغة الجهاز: ${deviceInfo.language}</p>
+                <p>نوع الجهاز: ${deviceInfo.deviceType}</p>
+            `;
+        } else {
+            document.getElementById("deviceInfo").innerHTML = "<p>لم يتم استلام بيانات.</p>";
+        }
     };
-</script><!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <title>البيانات المستلمة</title>
-</head>
-<body>
-    <h1>البيانات المستلمة:</h1>
-    <pre id="data"></pre>
-    <script>
-        // عرض البيانات المستلمة
-        const params = new URLSearchParams(window.location.search);
-        const data = params.toString();
-        document.getElementById('data').innerText = data || 'لم يتم استلام بيانات.';
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الصفحة الجديدة</title>
-</head>
-<body>
-    <h1>مرحبًا بك في الصفحة الجديدة!</h1>
-    <p>هذه صفحة جديدة تم إنشاؤها وربطها مع الصفحة السابقة.</p>
-</body>
-</html>
+</script>
