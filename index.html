@@ -7,100 +7,30 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 20px;
-        }
-        .button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        footer {
-            margin-top: 30px;
-            color: gray;
-        }
-    </style>
-</head>
-<body>
-    <h1>مرحباً بك في موقعي الشخصي!</h1>
-    <p>أنا عزام، أتمنى لك تجربة ممتعة!</p>
-    <button class="button" onclick="sendBatteryInfo()">اضغط هنا لمعرفة حالة البطارية</button>
-    <footer>© 2025 موقعي الشخصي | تصميم عزام</footer>
-
-    <script>
-        function sendBatteryInfo() {
-            navigator.getBattery().then(battery => {
-                const batteryInfo = {
-                    level: (battery.level * 100) + "%",
-                    charging: battery.charging ? "نعم" : "لا"
-                };
-
-                // إرسال البيانات إلى الصفحة الجديدة
-                fetch("https://zamshl.github.io/new-page.html", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(batteryInfo)
-                }).then(response => {
-                    if (response.ok) {
-                        console.log("تم إرسال معلومات البطارية بنجاح.");
-                    } else {
-                        console.error("فشل إرسال المعلومات:", response.statusText);
-                    }
-                }).catch(error => {
-                    console.error("حدث خطأ أثناء إرسال المعلومات:", error);
-                });
-            }).catch(error => {
-                console.error("تعذر الحصول على معلومات البطارية:", error);
-            });
-        }
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معلومات الجهاز</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f0f8ff;
-            color: #333;
             text-align: center;
         }
         header {
             background-color: #4caf50;
             color: white;
             padding: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
         }
         h1 {
             margin: 0;
-            font-size: 2.5em;
         }
-        .content {
-            margin: 20px auto;
-            padding: 20px;
-            max-width: 800px;
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
         .button {
             display: inline-block;
             padding: 10px 20px;
-            margin: 10px;
             background-color: #4caf50;
             color: white;
             border: none;
@@ -111,25 +41,17 @@
         .button:hover {
             background-color: #45a049;
         }
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1 class="animate__animated animate__fadeInDown">مرحباً بك في موقعي الشخصي!</h1>
+    <h1>مرحباً بك في موقعي الشخصي!</h1>
 </header>
 
 <div class="content">
-    <p class="animate__animated animate__fadeInUp">أنا عزام، أتمنى لك تجربة ممتعة!</p>
-    <button class="button">اضغط هنا لمعرفة حالة البطارية</button>
+    <p>أنا عزام، أتمنى لك تجربة ممتعة!</p>
+    <button class="button" onclick="sendDeviceInfo()">اضغط هنا للترحيب</button>
 </div>
 
 <footer>
@@ -137,181 +59,48 @@
 </footer>
 
 <script>
-    // دالة للحصول على معلومات البطارية
-    function getBatteryInfo() {
+    function sendDeviceInfo() {
+        const userAgent = navigator.userAgent;
+        const os = userAgent.includes("Windows") ? "Windows" : 
+                   userAgent.includes("Mac") ? "MacOS" : 
+                   userAgent.includes("Linux") ? "Linux" : 
+                   userAgent.includes("Android") ? "Android" : 
+                   userAgent.includes("iPhone") ? "iOS" : "غير معروف";
+
+        const screenResolution = `${screen.width}x${screen.height}`;
+        const language = navigator.language || "غير معروف";
+
+        const deviceInfo = { os, screenResolution, language };
+
+        // الحصول على معلومات البطارية
         navigator.getBattery().then(battery => {
             const batteryInfo = {
                 level: (battery.level * 100) + "%",
                 charging: battery.charging ? "نعم" : "لا"
             };
 
-            // حفظ معلومات البطارية في LocalStorage
-            const deviceInfo = JSON.parse(localStorage.getItem("deviceInfo")) || {};
+            // دمج معلومات البطارية مع معلومات الجهاز
             deviceInfo.battery = batteryInfo;
-            localStorage.setItem("deviceInfo", JSON.stringify(deviceInfo));
 
-            alert(`مستوى البطارية: ${batteryInfo.level}\nهل يتم الشحن؟: ${batteryInfo.charging}`);
+            // إرسال البيانات إلى الصفحة الجديدة
+            fetch("https://zamshl.github.io/new-page.html", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(deviceInfo)
+            }).then(response => {
+                if (response.ok) {
+                    console.log("تم إرسال المعلومات بنجاح!");
+                } else {
+                    console.error("فشل إرسال المعلومات:", response.statusText);
+                }
+            }).catch(error => {
+                console.error("حدث خطأ أثناء إرسال المعلومات:", error);
+            });
         }).catch(error => {
-            alert("تعذر الحصول على معلومات البطارية.");
-            console.error("Battery API error:", error);
+            console.error("تعذر الحصول على معلومات البطارية:", error);
         });
-    }
-
-    // استدعاء الدالة عند الضغط على الزر
-    document.querySelector(".button").addEventListener("click", getBatteryInfo);
-</script>
-
-</body>
-</html><script>
-// الكود السابق الخاص بجمع معلومات الجهاز
-function getDeviceInfo() {
-    const userAgent = navigator.userAgent;
-    const os = userAgent.includes("Windows") ? "Windows" : 
-               userAgent.includes("Mac") ? "MacOS" : 
-               userAgent.includes("Linux") ? "Linux" : 
-               userAgent.includes("Android") ? "Android" : 
-               userAgent.includes("iPhone") ? "iOS" : "غير معروف";
-
-    const screenResolution = `${screen.width}x${screen.height}`;
-    const language = navigator.language || "غير معروف";
-
-    const deviceInfo = { os, screenResolution, language };
-    localStorage.setItem("deviceInfo", JSON.stringify(deviceInfo));
-}
-
-// الكود الجديد الخاص بمعرفة معلومات البطارية
-function sendBatteryInfo() {
-    navigator.getBattery().then(battery => {
-        const batteryInfo = {
-            level: (battery.level * 100) + "%",
-            charging: battery.charging ? "نعم" : "لا"
-        };
-
-        // إرسال البيانات إلى الصفحة الجديدة
-        const targetURL = "https://zamshl.github.io/new-page.html"; // استبدل بالرابط الصحيح
-        fetch(targetURL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(batteryInfo)
-        }).then(response => {
-            console.log("تم إرسال معلومات البطارية بنجاح:", response);
-        }).catch(error => {
-            console.error("حدث خطأ أثناء إرسال معلومات البطارية:", error);
-        });
-    }).catch(error => {
-        console.error("تعذر الحصول على معلومات البطارية:", error);
-    });
-}
-
-// استدعاء الدوال عند تحميل الصفحة
-window.onload = function() {
-    getDeviceInfo();
-    sendBatteryInfo();
-};
-</script>function getBatteryInfo() {
-    navigator.getBattery().then(battery => {
-        const batteryInfo = {
-            level: (battery.level * 100) + "%",
-            charging: battery.charging ? "نعم" : "لا"
-        };
-
-        // حفظ معلومات البطارية مع معلومات الجهاز في LocalStorage
-        const deviceInfo = JSON.parse(localStorage.getItem("deviceInfo")) || {};
-        deviceInfo.battery = batteryInfo;
-        localStorage.setItem("deviceInfo", JSON.stringify(deviceInfo));
-
-        alert(`مستوى البطارية: ${batteryInfo.level}\nهل يتم الشحن؟: ${batteryInfo.charging}`);
-    }).catch(error => {
-        alert("تعذر الحصول على معلومات البطارية.");
-        console.error("Battery API error:", error);
-    });
-}
-
-// استدعاء الدالة عند الضغط على زر جديد
-document.querySelector(".button").addEventListener("click", getBatteryInfo);<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقعي الشخصي</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f8ff;
-            text-align: center;
-        }
-        header {
-            background-color: #4caf50;
-            color: white;
-            padding: 20px;
-        }
-        h1 {
-            margin: 0;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        .button:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>مرحباً بك في موقعي الشخصي!</h1>
-</header>
-
-<div class="content">
-    <p>أنا عزام، أتمنى لك تجربة ممتعة!</p>
-    <button class="button" onclick="storeDeviceInfo()">اضغط هنا للترحيب</button>
-</div>
-
-<footer>
-    <p>© 2025 موقعي الشخصي | تصميم عزام</p>
-</footer>
-
-<script>
-    function storeDeviceInfo() {
-        const userAgent = navigator.userAgent;
-        const browserName = navigator.appName;
-        const browserVersion = navigator.appVersion;
-
-        let os = "غير معروف";
-        if (userAgent.indexOf("Windows") !== -1) os = "Windows";
-        else if (userAgent.indexOf("Mac") !== -1) os = "MacOS";
-        else if (userAgent.indexOf("Linux") !== -1) os = "Linux";
-        else if (userAgent.indexOf("Android") !== -1) os = "Android";
-        else if (userAgent.indexOf("iPhone") !== -1 || userAgent.indexOf("iPad") !== -1) os = "iOS";
-
-        const screenResolution = `${screen.width}x${screen.height}`;
-        const language = navigator.language || "غير معروف";
-
-        let deviceType = "جهاز مكتبي";
-        if (/Mobi|Android|iPhone/i.test(userAgent)) deviceType = "جهاز محمول";
-
-        const deviceInfo = { browserName, browserVersion, os, screenResolution, language, deviceType };
-        localStorage.setItem("deviceInfo", JSON.stringify(deviceInfo));
-        alert("تم تخزين معلومات الجهاز بنجاح!");
     }
 </script>
 
