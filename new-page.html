@@ -1,20 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة جديدة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+        }
+        h1 {
+            margin: 0;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .info {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 600px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>مرحبًا بك في الصفحة الجديدة!</h1>
+</header>
+
+<div class="content">
+    <p>هذه صفحة جديدة تم إنشاؤها وربطها مع الصفحة السابقة.</p>
+    <div id="deviceInfo" class="info">تحميل البيانات...</div>
+</div>
+
+<footer>
+    <p>© 2025 موقعي الشخصي | تصميم عزام</p>
+</footer>
+
 <script>
     window.onload = function() {
-        // استرجاع البيانات من LocalStorage
         const deviceInfo = JSON.parse(localStorage.getItem("deviceInfo"));
-        
+
         if (deviceInfo) {
-            // عرض البيانات في الصفحة الجديدة
             document.getElementById("deviceInfo").innerHTML = `
-                <p>اسم المتصفح: ${deviceInfo.browserName}</p>
-                <p>إصدار المتصفح: ${deviceInfo.browserVersion}</p>
-                <p>نظام التشغيل: ${deviceInfo.os}</p>
-                <p>دقة الشاشة: ${deviceInfo.screenResolution}</p>
-                <p>لغة الجهاز: ${deviceInfo.language}</p>
-                <p>نوع الجهاز: ${deviceInfo.deviceType}</p>
+                <p><strong>اسم المتصفح:</strong> ${deviceInfo.browserName}</p>
+                <p><strong>إصدار المتصفح:</strong> ${deviceInfo.browserVersion}</p>
+                <p><strong>نظام التشغيل:</strong> ${deviceInfo.os}</p>
+                <p><strong>دقة الشاشة:</strong> ${deviceInfo.screenResolution}</p>
+                <p><strong>لغة الجهاز:</strong> ${deviceInfo.language}</p>
+                <p><strong>نوع الجهاز:</strong> ${deviceInfo.deviceType}</p>
             `;
         } else {
             document.getElementById("deviceInfo").innerHTML = "<p>لم يتم استلام بيانات.</p>";
         }
     };
 </script>
+
+</body>
+</html>
