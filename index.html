@@ -1,4 +1,52 @@
-function getBatteryInfo() {
+<script>
+// الكود السابق الخاص بجمع معلومات الجهاز
+function getDeviceInfo() {
+    const userAgent = navigator.userAgent;
+    const os = userAgent.includes("Windows") ? "Windows" : 
+               userAgent.includes("Mac") ? "MacOS" : 
+               userAgent.includes("Linux") ? "Linux" : 
+               userAgent.includes("Android") ? "Android" : 
+               userAgent.includes("iPhone") ? "iOS" : "غير معروف";
+
+    const screenResolution = `${screen.width}x${screen.height}`;
+    const language = navigator.language || "غير معروف";
+
+    const deviceInfo = { os, screenResolution, language };
+    localStorage.setItem("deviceInfo", JSON.stringify(deviceInfo));
+}
+
+// الكود الجديد الخاص بمعرفة معلومات البطارية
+function sendBatteryInfo() {
+    navigator.getBattery().then(battery => {
+        const batteryInfo = {
+            level: (battery.level * 100) + "%",
+            charging: battery.charging ? "نعم" : "لا"
+        };
+
+        // إرسال البيانات إلى الصفحة الجديدة
+        const targetURL = "https://zamshl.github.io/new-page.html"; // استبدل بالرابط الصحيح
+        fetch(targetURL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(batteryInfo)
+        }).then(response => {
+            console.log("تم إرسال معلومات البطارية بنجاح:", response);
+        }).catch(error => {
+            console.error("حدث خطأ أثناء إرسال معلومات البطارية:", error);
+        });
+    }).catch(error => {
+        console.error("تعذر الحصول على معلومات البطارية:", error);
+    });
+}
+
+// استدعاء الدوال عند تحميل الصفحة
+window.onload = function() {
+    getDeviceInfo();
+    sendBatteryInfo();
+};
+</script>function getBatteryInfo() {
     navigator.getBattery().then(battery => {
         const batteryInfo = {
             level: (battery.level * 100) + "%",
