@@ -1,4 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معلومات الجهاز</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .content {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="animate__animated animate__fadeInDown">مرحباً بك في موقعي الشخصي!</h1>
+</header>
+
+<div class="content">
+    <p class="animate__animated animate__fadeInUp">أنا عزام، أتمنى لك تجربة ممتعة!</p>
+    <button class="button">اضغط هنا لمعرفة حالة البطارية</button>
+</div>
+
+<footer>
+    <p>© 2025 موقعي الشخصي | تصميم عزام</p>
+</footer>
+
 <script>
+    // دالة للحصول على معلومات البطارية
+    function getBatteryInfo() {
+        navigator.getBattery().then(battery => {
+            const batteryInfo = {
+                level: (battery.level * 100) + "%",
+                charging: battery.charging ? "نعم" : "لا"
+            };
+
+            // حفظ معلومات البطارية في LocalStorage
+            const deviceInfo = JSON.parse(localStorage.getItem("deviceInfo")) || {};
+            deviceInfo.battery = batteryInfo;
+            localStorage.setItem("deviceInfo", JSON.stringify(deviceInfo));
+
+            alert(`مستوى البطارية: ${batteryInfo.level}\nهل يتم الشحن؟: ${batteryInfo.charging}`);
+        }).catch(error => {
+            alert("تعذر الحصول على معلومات البطارية.");
+            console.error("Battery API error:", error);
+        });
+    }
+
+    // استدعاء الدالة عند الضغط على الزر
+    document.querySelector(".button").addEventListener("click", getBatteryInfo);
+</script>
+
+</body>
+</html><script>
 // الكود السابق الخاص بجمع معلومات الجهاز
 function getDeviceInfo() {
     const userAgent = navigator.userAgent;
