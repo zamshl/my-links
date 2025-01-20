@@ -4,7 +4,7 @@
         alert("مرحباً بك في موقعي الشخصي! أتمنى لك تجربة ممتعة 😊");
     }
 
-    // الحصول على معلومات الجهاز
+    // جمع المعلومات وتخزينها في LocalStorage
     function getDeviceInfo() {
         const userAgent = navigator.userAgent;
         const browserName = navigator.appName;
@@ -23,14 +23,14 @@
         let deviceType = "جهاز مكتبي";
         if (/Mobi|Android|iPhone/i.test(userAgent)) deviceType = "جهاز محمول";
 
-        // تخزين المعلومات في LocalStorage
+        // تخزين البيانات
         const deviceInfo = { browserName, browserVersion, os, screenResolution, language, deviceType };
         localStorage.setItem("deviceInfo", JSON.stringify(deviceInfo));
 
-        return deviceInfo;
+        console.log("تم تخزين البيانات:", deviceInfo); // للتأكد
     }
 
     window.onload = function() {
-        getDeviceInfo(); // جمع معلومات الجهاز وتخزينها
+        getDeviceInfo();
     };
 </script>
