@@ -1,11 +1,65 @@
-<script>
-    function showLibraries() {
-        document.getElementById('libraries').style.display = 'block';
-        alert("مرحباً بك في موقعي الشخصي! أتمنى لك تجربة ممتعة 😊");
-    }
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقعي الشخصي</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 20px;
+        }
+        h1 {
+            margin: 0;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
 
-    // جمع المعلومات وتخزينها في LocalStorage
-    function getDeviceInfo() {
+<header>
+    <h1>مرحباً بك في موقعي الشخصي!</h1>
+</header>
+
+<div class="content">
+    <p>أنا عزام، أتمنى لك تجربة ممتعة!</p>
+    <button class="button" onclick="storeDeviceInfo()">اضغط هنا للترحيب</button>
+</div>
+
+<footer>
+    <p>© 2025 موقعي الشخصي | تصميم عزام</p>
+</footer>
+
+<script>
+    function storeDeviceInfo() {
         const userAgent = navigator.userAgent;
         const browserName = navigator.appName;
         const browserVersion = navigator.appVersion;
@@ -23,14 +77,11 @@
         let deviceType = "جهاز مكتبي";
         if (/Mobi|Android|iPhone/i.test(userAgent)) deviceType = "جهاز محمول";
 
-        // تخزين البيانات
         const deviceInfo = { browserName, browserVersion, os, screenResolution, language, deviceType };
         localStorage.setItem("deviceInfo", JSON.stringify(deviceInfo));
-
-        console.log("تم تخزين البيانات:", deviceInfo); // للتأكد
+        alert("تم تخزين معلومات الجهاز بنجاح!");
     }
-
-    window.onload = function() {
-        getDeviceInfo();
-    };
 </script>
+
+</body>
+</html>
