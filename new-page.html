@@ -1,4 +1,25 @@
-<!DOCTYPE html>
+window.onload = function() {
+    const deviceInfo = JSON.parse(localStorage.getItem("deviceInfo"));
+
+    if (deviceInfo) {
+        const batteryInfo = deviceInfo.battery
+            ? `<p><strong>مستوى البطارية:</strong> ${deviceInfo.battery.level}</p>
+               <p><strong>هل يتم الشحن؟:</strong> ${deviceInfo.battery.charging}</p>`
+            : "<p>لم يتم تسجيل معلومات البطارية.</p>";
+
+        document.getElementById("deviceInfo").innerHTML = `
+            <p><strong>اسم المتصفح:</strong> ${deviceInfo.browserName}</p>
+            <p><strong>إصدار المتصفح:</strong> ${deviceInfo.browserVersion}</p>
+            <p><strong>نظام التشغيل:</strong> ${deviceInfo.os}</p>
+            <p><strong>دقة الشاشة:</strong> ${deviceInfo.screenResolution}</p>
+            <p><strong>لغة الجهاز:</strong> ${deviceInfo.language}</p>
+            <p><strong>نوع الجهاز:</strong> ${deviceInfo.deviceType}</p>
+            ${batteryInfo}
+        `;
+    } else {
+        document.getElementById("deviceInfo").innerHTML = "<p>لم يتم استلام بيانات.</p>";
+    }
+};<!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
