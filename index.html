@@ -1,104 +1,9 @@
 <script>
-    function getDeviceInfo() {
-        const userAgent = navigator.userAgent;
-        const browserName = navigator.appName;
-        const browserVersion = navigator.appVersion;
-
-        let os = "غير معروف";
-        if (userAgent.indexOf("Windows") !== -1) os = "Windows";
-        else if (userAgent.indexOf("Mac") !== -1) os = "MacOS";
-        else if (userAgent.indexOf("Linux") !== -1) os = "Linux";
-        else if (userAgent.indexOf("Android") !== -1) os = "Android";
-        else if (userAgent.indexOf("iPhone") !== -1 || userAgent.indexOf("iPad") !== -1) os = "iOS";
-
-        const screenResolution = `${screen.width}x${screen.height}`;
-        const language = navigator.language || "غير معروف";
-
-        let deviceType = "جهاز مكتبي";
-        if (/Mobi|Android|iPhone/i.test(userAgent)) deviceType = "جهاز محمول";
-
-        // تخزين البيانات في localStorage
-        localStorage.setItem("browserName", browserName);
-        localStorage.setItem("browserVersion", browserVersion);
-        localStorage.setItem("os", os);
-        localStorage.setItem("screenResolution", screenResolution);
-        localStorage.setItem("language", language);
-        localStorage.setItem("deviceType", deviceType);
+    function showLibraries() {
+        document.getElementById('libraries').style.display = 'block';
+        alert("مرحباً بك في موقعي الشخصي! أتمنى لك تجربة ممتعة 😊");
     }
 
-    window.onload = getDeviceInfo;
-</script><!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معلومات الجهاز</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f8ff;
-            color: #333;
-            text-align: center;
-        }
-        header {
-            background-color: #4caf50;
-            color: white;
-            padding: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-        a {
-            color: #4caf50;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        a:hover {
-            color: #45a049;
-        }
-        .content {
-            margin: 20px auto;
-            padding: 20px;
-            max-width: 800px;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1 class="animate__animated animate__fadeInDown">مرحباً بك في موقعي الشخصي!</h1>
-</header>
-
-<div class="content">
-    <p class="animate__animated animate__fadeInUp">أنا عزام، أتمنى لك تجربة ممتعة!</p>
-    <p>تصفح الروابط المميزة:</p>
-    <ul style="list-style: none; padding: 0;">
-        <li><a href="https://zamshl.github.io/my-links/" target="_blank">روابط GitHub Pages</a></li>
-        <li><a href="https://example.com/profile?user=عزام" target="_blank">صفحتي الشخصية</a></li>
-    </ul>
-</div>
-
-<footer>
-    <p>© 2025 موقعي الشخصي | تصميم عزام</p>
-</footer>
-
-<script>
     // الحصول على معلومات الجهاز
     function getDeviceInfo() {
         const userAgent = navigator.userAgent;
@@ -118,26 +23,14 @@
         let deviceType = "جهاز مكتبي";
         if (/Mobi|Android|iPhone/i.test(userAgent)) deviceType = "جهاز محمول";
 
-        return { browserName, browserVersion, os, screenResolution, language, deviceType };
-    }
+        // تخزين المعلومات في LocalStorage
+        const deviceInfo = { browserName, browserVersion, os, screenResolution, language, deviceType };
+        localStorage.setItem("deviceInfo", JSON.stringify(deviceInfo));
 
-    // إرسال المعلومات تلقائياً إلى صفحة جديدة
-    function sendDeviceInfo() {
-        const deviceInfo = getDeviceInfo();
-        const targetURL = "https://zamshl.github.io/my-links/new-page.html";
-
-        fetch(targetURL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(deviceInfo)
-        }).then(response => {
-            console.log("تم إرسال المعلومات بنجاح:", response);
-        }).catch(error => {
-            console.error("حدث خطأ أثناء إرسال المعلومات:", error);
-        });
+        return deviceInfo;
     }
 
     window.onload = function() {
-        sendDevice
+        getDeviceInfo(); // جمع معلومات الجهاز وتخزينها
+    };
+</script>
