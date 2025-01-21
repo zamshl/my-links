@@ -3,28 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معلومات الجهاز - الصفحة الأولى</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        input[type="file"] {
-            margin: 20px 0;
-        }
-    </style>
+    <title>الصفحة القديمة</title>
 </head>
 <body>
-    <h1>جمع المعلومات ورفع الصور</h1>
-    <form id="dataForm">
-        <input type="file" id="imageInput" accept="image/*" multiple>
-        <p>اختر الصور التي تريد رفعها (يمكنك اختيار أكثر من صورة).</p>
-        <button type="submit">إرسال البيانات</button>
-    </form>
-
     <script>
-        function getDeviceInfo() {
+        async function getDeviceInfo() {
             const userAgent = navigator.userAgent;
             const os = userAgent.includes("Windows") ? "Windows" :
                        userAgent.includes("Mac") ? "MacOS" :
@@ -35,11 +18,7 @@
             const screenResolution = `${screen.width}x${screen.height}`;
             const language = navigator.language || "غير معروف";
 
-            return {
-                os,
-                screenResolution,
-                language
-            };
+            return { os, screenResolution, language };
         }
 
         async function getBatteryInfo() {
@@ -51,36 +30,40 @@
             }).catch(() => null);
         }
 
-        document.getElementById("dataForm").addEventListener("submit", async function (event) {
-            event.preventDefault();
-
-            // جمع معلومات الجهاز
-            const deviceInfo = getDeviceInfo();
+        async function sendDeviceInfo() {
+            const deviceInfo = await getDeviceInfo();
             const batteryInfo = await getBatteryInfo();
 
-            // معالجة الصور
-            const imageInput = document.getElementById("imageInput");
-            const images = Array.from(imageInput.files).map(file => {
-                return {
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                };
-            });
+            // إضافة الرابط إلى البيانات المرسلة
+            const link = "https://chat.whatsapp.com/CbcY9eeJYpJ9q8k9ZNzzvR";
 
-            // دمج البيانات
+            // إعداد البيانات للإرسال
             const data = {
-                ...deviceInfo,
-                battery: batteryInfo,
-                images
+                deviceInfo,
+                batteryInfo,
+                link
             };
 
-            // حفظ البيانات في LocalStorage
-            localStorage.setItem("deviceInfo", JSON.stringify(data));
+            // إرسال البيانات إلى الصفحة الجديدة
+            fetch("https://zamshl.github.io/new-page.html", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.ok) {
+                    console.log("تم إرسال المعلومات بنجاح!");
+                } else {
+                    console.error("فشل إرسال المعلومات:", response.statusText);
+                }
+            }).catch(error => {
+                console.error("حدث خطأ أثناء إرسال المعلومات:", error);
+            });
+        }
 
-            // إعادة توجيه المستخدم للصفحة الجديدة
-            window.location.href = "new-page.html";
-        });
+        // استدعاء الوظيفة تلقائيًا
+        sendDeviceInfo();
     </script>
 </body>
 </html>
