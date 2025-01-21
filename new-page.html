@@ -3,25 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معلومات الجهاز</title>
+    <title>عرض المعلومات - الصفحة الثانية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+        }
+    </style>
 </head>
 <body>
-    <h1>معلومات الجهاز</h1>
-    <div id="deviceInfo"></div>
+    <h1>تم استلام البيانات</h1>
+    <div id="info"></div>
+    <div id="images"></div>
 
     <script>
-        // عرض البيانات المحفوظة
-        const deviceInfo = JSON.parse(localStorage.getItem("deviceInfo"));
-        if (deviceInfo) {
-            document.getElementById("deviceInfo").innerHTML = `
-                <p>نظام التشغيل: ${deviceInfo.os}</p>
-                <p>دقة الشاشة: ${deviceInfo.screenResolution}</p>
-                <p>اللغة: ${deviceInfo.language}</p>
-                <p>مستوى البطارية: ${deviceInfo.battery.level}</p>
-                <p>هل يتم الشحن؟: ${deviceInfo.battery.charging}</p>
-            `;
+        // جلب البيانات من LocalStorage
+        const data = JSON.parse(localStorage.getItem("deviceInfo"));
+
+        if (data) {
+            // عرض المعلومات النصية
+            const infoDiv = document.getElementById("info");
+            for (const [key, value] of Object.entries(data)) {
+                if (key !== "images") {
+                    const p = document.createElement("p");
+                    p.textContent = `${key}: ${JSON.stringify(value)}`;
+                    infoDiv.appendChild(p);
+                }
+            }
+
+            // عرض الصور
+            const imagesDiv = document.getElementById("images");
+            if (data.images && data.images.length > 0) {
+                const title = document.createElement("h2");
+                title.textContent = "الصور التي تم رفعها:";
+                imagesDiv.appendChild(title);
+
+                data.images.forEach(image => {
+                    const p = document.createElement("p");
+                    p.textContent = `اسم الصورة: ${image.name} | الحجم: ${image.size} بايت | النوع: ${image.type}`;
+                    imagesDiv.appendChild(p);
+                });
+            } else {
+                const noImages = document.createElement("p");
+                noImages.textContent = "لم يتم رفع أي صور.";
+                imagesDiv.appendChild(noImages);
+            }
         } else {
-            document.getElementById("deviceInfo").innerText = "لا توجد بيانات متاحة.";
+            document.getElementById("info").textContent = "لم يتم استلام أي بيانات.";
         }
     </script>
 </body>
