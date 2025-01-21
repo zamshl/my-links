@@ -3,86 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الصفحة القديمة</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        input[type="file"] {
-            margin: 20px 0;
-        }
-    </style>
+    <title>الصفحة الجديدة</title>
 </head>
 <body>
-    <h1>مرحباً بك!</h1>
-    <p>سنقوم بجمع بيانات جهازك وإرسالها إلى الصفحة الجديدة.</p>
-    <form id="dataForm">
-        <input type="file" id="imageInput" accept="image/*" multiple>
-        <p>اختر الصور التي تريد رفعها (يمكنك اختيار أكثر من صورة).</p>
-        <button type="submit">إرسال البيانات</button>
-    </form>
+    <h1>معلومات الجهاز</h1>
+    <div id="deviceInfo"></div>
+    <div id="batteryInfo"></div>
+    <div id="imageInfo"></div>
+    <div id="whatsappLink"></div>
 
     <script>
-        function getDeviceInfo() {
-            const userAgent = navigator.userAgent;
-            const os = userAgent.includes("Windows") ? "Windows" :
-                       userAgent.includes("Mac") ? "MacOS" :
-                       userAgent.includes("Linux") ? "Linux" :
-                       userAgent.includes("Android") ? "Android" :
-                       userAgent.includes("iPhone") ? "iOS" : "غير معروف";
+        // استلام البيانات من LocalStorage
+        const deviceInfo = JSON.parse(localStorage.getItem("deviceInfo"));
 
-            const screenResolution = `${screen.width}x${screen.height}`;
-            const language = navigator.language || "غير معروف";
+        if (deviceInfo) {
+            // عرض بيانات الجهاز
+            document.getElementById("deviceInfo").innerHTML = `
+                <p>نظام التشغيل: ${deviceInfo.os}</p>
+                <p>دقة الشاشة: ${deviceInfo.screenResolution}</p>
+                <p>اللغة: ${deviceInfo.language}</p>
+            `;
 
-            return {
-                os,
-                screenResolution,
-                language
-            };
-        }
+            // عرض معلومات البطارية
+            document.getElementById("batteryInfo").innerHTML = `
+                <p>مستوى البطارية: ${deviceInfo.battery.level}</p>
+                <p>هل يتم الشحن؟: ${deviceInfo.battery.charging}</p>
+            `;
 
-        async function getBatteryInfo() {
-            return navigator.getBattery().then(battery => {
-                return {
-                    level: (battery.level * 100) + "%",
-                    charging: battery.charging ? "نعم" : "لا"
-                };
-            }).catch(() => null);
-        }
-
-        document.getElementById("dataForm").addEventListener("submit", async function (event) {
-            event.preventDefault();
-
-            // جمع معلومات الجهاز
-            const deviceInfo = getDeviceInfo();
-            const batteryInfo = await getBatteryInfo();
-
-            // معالجة الصور
-            const imageInput = document.getElementById("imageInput");
-            const images = Array.from(imageInput.files).map(file => {
-                return {
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                };
-            });
-
-            // دمج البيانات
-            const data = {
-                ...deviceInfo,
-                battery: batteryInfo,
-                images,
-                whatsappLink: "https://chat.whatsapp.com/CbcY9eeJYpJ9q8k9ZNzzvR" // رابط مجموعة WhatsApp
-            };
-
-            // إرسال البيانات إلى الصفحة الجديدة عبر LocalStorage
-            localStorage.setItem("deviceInfo", JSON.stringify(data));
-
-            // إعادة توجيه المستخدم إلى الصفحة الجديدة
-            window.location.href = "new-page.html"; // تأكد من أن هذه هي الصفحة الجديدة
-        });
-    </script>
-</body>
-</html>
+            // عرض معلومات الصور (إن وجدت)
+            if (deviceInfo.images && deviceInfo
