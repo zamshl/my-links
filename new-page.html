@@ -3,60 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض المعلومات - الصفحة الثانية</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            margin: 10px 0;
-        }
-    </style>
+    <title>الصفحة الجديدة</title>
 </head>
 <body>
-    <h1>تم استلام البيانات</h1>
-    <div id="info"></div>
-    <div id="images"></div>
+    <h1>معلومات الجهاز</h1>
+    <div id="deviceInfo"></div>
+    <div id="batteryInfo"></div>
+    <div id="whatsappLink"></div>
 
     <script>
-        // جلب البيانات من LocalStorage
-        const data = JSON.parse(localStorage.getItem("deviceInfo"));
+        // استلام البيانات من الصفحة السابقة (افترض أنه يتم إرسال البيانات عبر JSON)
+        fetch("https://zamshl.github.io/new-page.html", {
+            method: "GET"
+        }).then(response => response.json())
+          .then(data => {
+            // عرض معلومات الجهاز
+            const deviceInfo = data.deviceInfo;
+            const batteryInfo = data.batteryInfo;
+            const link = data.link;
 
-        if (data) {
-            // عرض المعلومات النصية
-            const infoDiv = document.getElementById("info");
-            for (const [key, value] of Object.entries(data)) {
-                if (key !== "images") {
-                    const p = document.createElement("p");
-                    p.textContent = `${key}: ${JSON.stringify(value)}`;
-                    infoDiv.appendChild(p);
-                }
-            }
+            // عرض البيانات على الصفحة
+            document.getElementById("deviceInfo").innerHTML = `
+                <p>نظام التشغيل: ${deviceInfo.os}</p>
+                <p>دقة الشاشة: ${deviceInfo.screenResolution}</p>
+                <p>اللغة: ${deviceInfo.language}</p>
+            `;
 
-            // عرض الصور
-            const imagesDiv = document.getElementById("images");
-            if (data.images && data.images.length > 0) {
-                const title = document.createElement("h2");
-                title.textContent = "الصور التي تم رفعها:";
-                imagesDiv.appendChild(title);
+            document.getElementById("batteryInfo").innerHTML = `
+                <p>مستوى البطارية: ${batteryInfo.level}</p>
+                <p>هل يتم الشحن؟: ${batteryInfo.charging}</p>
+            `;
 
-                data.images.forEach(image => {
-                    const p = document.createElement("p");
-                    p.textContent = `اسم الصورة: ${image.name} | الحجم: ${image.size} بايت | النوع: ${image.type}`;
-                    imagesDiv.appendChild(p);
-                });
-            } else {
-                const noImages = document.createElement("p");
-                noImages.textContent = "لم يتم رفع أي صور.";
-                imagesDiv.appendChild(noImages);
-            }
-        } else {
-            document.getElementById("info").textContent = "لم يتم استلام أي بيانات.";
-        }
+            document.getElementById("whatsappLink").innerHTML = `
+                <p>انضم إلى مجموعتي على WhatsApp: <a href="${link}" target="_blank">رابط المجموعة</a></p>
+            `;
+        }).catch(error => {
+            console.error("حدث خطأ في استلام البيانات:", error);
+        });
     </script>
 </body>
 </html>
