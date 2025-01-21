@@ -1,49 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معلومات الهاتف والبطارية</title>
+    <title>معلومات الجهاز</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f8ff;
             text-align: center;
-            margin-top: 50px;
+            color: #333;
+        }
+        h1 {
+            color: #4caf50;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4caf50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        footer {
+            margin-top: 30px;
+            color: gray;
         }
     </style>
 </head>
 <body>
-    <h1>معلومات الهاتف والبطارية</h1>
-    <div id="info">
-        <p>جارٍ الحصول على المعلومات...</p>
-    </div>
+    <h1>معلومات الجهاز المستخدم</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>المعلومة</th>
+                <th>القيمة</th>
+            </tr>
+        </thead>
+        <tbody id="device-info">
+        </tbody>
+    </table>
+    <footer>© 2025 تصميم: عزام</footer>
 
     <script>
-        async function getBatteryInfo() {
-            const infoDiv = document.getElementById('info');
+        function getDeviceInfo() {
+            const userAgent = navigator.userAgent;
+            const os = userAgent.includes("Windows") ? "Windows" :
+                       userAgent.includes("Mac") ? "MacOS" :
+                       userAgent.includes("Linux") ? "Linux" :
+                       userAgent.includes("Android") ? "Android" :
+                       userAgent.includes("iPhone") ? "iOS" : "غير معروف";
 
-            try {
-                // معلومات البطارية
-                const battery = await navigator.getBattery();
-                const batteryInfo = `
-                    <p>نسبة الشحن: ${Math.round(battery.level * 100)}%</p>
-                    <p>حالة الشحن: ${battery.charging ? "يشحن" : "غير مشحون"}</p>
-                `;
+            const browser = navigator.appName + " (Version: " + navigator.appVersion + ")";
+            const screenResolution = `${screen.width}x${screen.height}`;
+            const language = navigator.language || "غير معروف";
 
-                // معلومات الجهاز
-                const deviceInfo = `
-                    <p>لغة الجهاز: ${navigator.language}</p>
-                    <p>نظام التشغيل: ${navigator.platform}</p>
-                    <p>اسم المتصفح: ${navigator.userAgent}</p>
-                `;
+            const deviceType = /Mobi|Android|iPhone/i.test(userAgent) ? "جهاز محمول" : "جهاز مكتبي";
 
-                infoDiv.innerHTML = batteryInfo + deviceInfo;
-            } catch (error) {
-                infoDiv.innerHTML = `<p>تعذر الحصول على المعلومات: ${error.message}</p>`;
+            return {
+                "نظام التشغيل": os,
+                "نوع الجهاز": deviceType,
+                "المتصفح": browser,
+                "دقة الشاشة": screenResolution,
+                "اللغة": language,
+            };
+        }
+
+        function displayDeviceInfo() {
+            const deviceInfo = getDeviceInfo();
+            const tableBody = document.getElementById("device-info");
+            for (const [key, value] of Object.entries(deviceInfo)) {
+                const row = `<tr><td>${key}</td><td>${value}</td></tr>`;
+                tableBody.innerHTML += row;
             }
         }
 
-        getBatteryInfo();
+        // عرض المعلومات عند تحميل الصفحة
+        window.onload = displayDeviceInfo;
     </script>
 </body>
 </html>
